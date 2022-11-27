@@ -1,0 +1,306 @@
+openapi: 3.0.0
+servers: 
+    - url: http://localhost:8080/JavaAPI/
+info:
+  version: "1.0.0"
+  title: RestAPI documentation
+  description: The API for the RestAPI
+  
+  
+paths:
+  /rest:
+    get:
+      parameters:
+        - in: query
+          name: rest
+          schema:
+            type: string
+          required: true  
+      summary: base route for our application
+      tags: 
+      - Base route
+      description: This is the url pattern for our application, which we'll use in our path to call the operation.
+      responses:
+        '200':    # status code
+          description: OK
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+                  
+
+  /rest/createDir:
+    get:
+      summary: creates a directory
+      tags: 
+      - Directory operations
+      parameters:
+        - in: query
+          name: dir
+          example: directory1
+          required: true
+          description: Name of the directory we wish to create.
+          schema:
+            type : string
+      responses: 
+        '200':
+          description: OK
+  
+  /rest/deleteDir:
+    get:
+      summary: removes a directory
+      tags: 
+      - Directory operations
+      parameters:
+        - in: query
+          name: dir
+          example: directory1
+          required: true
+          description: Name of the directory we wish to remove.
+          schema:
+            type : string
+      responses: 
+        '200':
+          description: OK
+          
+  /rest/sort:
+    get:
+      summary: sorts a directory
+      description: Prints out the number of files present in the directory and sorts a directory ordered by the sizes of the files.
+      tags: 
+      - Directory operations
+      parameters:
+        - in: query
+          name: dir
+          example: directory1
+          required: true
+          description: Name of the directory we wish to sort.
+          schema:
+            type : string
+      responses: 
+        '200':
+          description: OK
+          
+  /rest/createFile:
+    get:
+      summary: creates a file
+      tags: 
+      - File operations
+      parameters:
+        - in: query
+          name: dir
+          example: directory1
+          required: true
+          description: Name of the directory we wish to create in.
+          schema:
+            type : string
+            
+        - in: query
+          name: file
+          example: file1.txt
+          required: true
+          schema:
+            type: string
+          description: The name of the file we wish to create.
+      responses: 
+        '200':
+          description: OK
+  
+  /rest/deleteFile:
+    get:
+      summary: removes a file
+      tags: 
+      - File operations
+      parameters:
+        - in: query
+          name: dir
+          example: directory1
+          required: true
+          description: Name of the directory we wish to delete from.
+          schema:
+            type : string
+            
+        - in: query
+          name: file
+          example: file1.txt
+          required: true
+          schema:
+            type: string
+          description: The name of the file we wish to delete.
+      responses: 
+        '200':
+          description: OK
+          
+  /rest/copyFile:
+    get:
+      summary: copies a file
+      tags: 
+      - File operations
+      parameters:
+        - in: query
+          name: dir
+          example: directory1
+          required: true
+          description: Name of the directory we wish to copy from.
+          schema:
+            type : string
+            
+        - in: query
+          name: file
+          example: file1.txt
+          required: true
+          schema:
+            type: string
+          description: The name of the file we wish to copy.
+          
+        - in: query
+          name: dirto
+          example: directory2
+          required: true
+          schema:
+            type: string
+          description: The name of the directory we wish to copy to.  
+      responses: 
+        '200':
+          description: OK
+          
+  /rest/getContent:
+    get:
+      summary: prints the content of the file
+      tags: 
+      - File operations
+      parameters:
+        - in: query
+          name: dir
+          example: directory1
+          required: true
+          description: Name of the directory we wish to obtain the file from.
+          schema:
+            type : string
+            
+        - in: query
+          name: file
+          example: file1.txt
+          required: true
+          schema:
+            type: string
+          description: Name of the file we wish to obtain the content.
+      responses: 
+        '200':
+          description: OK
+          
+  /rest/moveFile:
+    get:
+      summary: moves the file
+      tags: 
+      - File operations
+      parameters:
+        - in: query
+          name: dir
+          example: directory1
+          required: true
+          description: Name of the directory we wish to move the file from.
+          schema:
+            type : string
+            
+        - in: query
+          name: file
+          example: file1.txt
+          required: true
+          schema:
+            type: string
+          description: Name of the file we wish to move.
+          
+        - in: query
+          name: dirto
+          example: directory2
+          required: true
+          description: Name of the directory we wish to move the file to.
+          schema:
+            type : string  
+      responses: 
+        '200':
+          description: OK
+  
+  /rest/find:
+    get:
+      summary: find a pattern in file
+      tags: 
+      - File operations
+      description: Prints out the file path containing the given pattern and prints out the line in the file where the pattern occurs.
+      parameters:
+        - in: query
+          name: dir
+          example: directory1
+          required: true
+          description: Name of the directory we wish to move the file from.
+          schema:
+            type : string
+            
+        - in: query
+          name: pattern
+          example: pizza
+          required: true
+          schema:
+            type: string
+          description: The pattern we are looking for in files.
+      responses: 
+        '200':
+          description: OK
+          
+  /rest/encrypt:
+    get:
+      summary: encrypts the content of the file
+      description: Encrypts the file and generates a secret key we will need for decrypting the file.
+      tags: 
+      - File operations
+      parameters:
+        - in: query
+          name: dir
+          example: directory1
+          required: true
+          description: Name of the directory we wish to obtain the file from.
+          schema:
+            type : string
+            
+        - in: query
+          name: file
+          example: file1.txt
+          required: true
+          schema:
+            type: string
+          description: Name of the file we wish to encrypt.
+      responses: 
+        '200':
+          description: OK
+          
+  /rest/decrypt:
+    get:
+      summary: decrypts the content of an encrypted file
+      description: Decrypt the file and with the use of a secret key.
+      tags: 
+      - File operations
+      parameters:
+        - in: query
+          name: dir
+          example: directory1
+          required: true
+          description: Name of the directory we wish to obtain the file from.
+          schema:
+            type : string
+            
+        - in: query
+          name: file
+          example: file1.txt
+          required: true
+          schema:
+            type: string
+          description: Name of the file we wish to decrypt.
+        
+        
+      responses: 
+        '200':
+          description: OK
+  
